@@ -1,0 +1,21 @@
+# Package Files #
+*.jar
+*.war
+*.ear
+**/target
+mybatis-generator-config.xml
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+**/logs
+**/log
+*.log
+
+.buildpath
+.project
+.settings/
+.DS_Store
+/nbproject/private/
