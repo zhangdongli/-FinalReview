@@ -1,0 +1,13 @@
+{
+  "questions": {
+    "_all": {
+      "enabled": false
+    },
+    "properties": {
+      "title": {
+        "type": "string",
+        "analyzer": "ik"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 package com.zdl.finalreview.dao.test;
 
 import com.zdl.finalreview.dao.enums.QuestionType;
-import com.zdl.finalreview.dao.models.Question;
+import com.zdl.finalreview.dao.model.Question;
 import com.zdl.finalreview.dao.repository.QuestionRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class QuestionRepositoryTest {
     public void saveQuestionTest() {
 
         Question question = new Question(
-                1,
+                "1_1",
                 QuestionType.TRUEORFALSE.getCode(),
                 "中国人都是女人",
                 new ArrayList<String>() {{

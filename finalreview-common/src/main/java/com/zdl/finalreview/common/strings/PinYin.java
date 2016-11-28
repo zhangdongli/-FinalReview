@@ -1,5 +1,6 @@
 package com.zdl.finalreview.common.strings;
 
+import com.zdl.finalreview.common.enums.PinYinType;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
@@ -28,24 +29,48 @@ public class PinYin {
     }
 
     /**
-     * 转换一个字符串
+     * 转换中文字符串成拼音字符串
+     * 注意，因为多音字的存在，会返回多个拼音字符串
      *
      * @param str 汉字字符串
-     * @return 拼音字符串
+     * @return 拼音字符串集合
      */
     public String[] getStringPinYins(String str) {
+        return this.getPinYins(str, PinYinType.FULL_PINYIN);
+    }
+
+    /**
+     * 转换中文字符串成拼音简写字符串
+     * 注意，因为多音字的存在，会返回多个拼音简写字符串
+     *
+     * @param str 汉字字符串
+     * @return 拼音简写字符串集合
+     */
+    public String[] getStringSimpPinYins(String str) {
+        return this.getPinYins(str, PinYinType.SIMP_PINYIN);
+    }
+
+    /**
+     * 转换中文字符串成拼音字符串
+     *
+     * @param str        汉字字符串
+     * @param pinYinType 拼音类型
+     * @return 拼音字符串集合
+     */
+    private String[] getPinYins(String str, PinYinType pinYinType) {
         if (null == str || str.trim().length() == 0) {
-            return null;
+            return new String[0];
         }
+
         str = str.trim();
 
         String lastTmpPinYin = null;
         List<String> pinyins = null;
         String[] tempPinyins = null;
-        PinYinBuilder builder = new PinYinBuilder();
+        PinYinBuilder builder = new PinYinBuilder(pinYinType);
         for (int i = 0; i < str.length(); ++i) {
             lastTmpPinYin = "";
-            pinyins = new ArrayList<String>();
+            pinyins = new ArrayList<>();
             tempPinyins = getCharacterPinYin(str.charAt(i));
             if (tempPinyins == null) {
                 //如果str.charAt(i)非汉字，则保持原样
@@ -82,6 +107,6 @@ public class PinYin {
         //如果c不是汉字，toHanyuPinyinStringArray会返回null
         if (pinyin == null) return null;
 
-        return pinyin;
+        return new String[]{pinyin[0]};
     }
 }

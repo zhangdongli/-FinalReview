@@ -1,35 +1,25 @@
-package com.zdl.finalreview.dao.models;
+package com.zdl.finalreview.service.model;
 
 import java.util.List;
 
 /**
- * Created by zhangdongli on 16/11/25.
- * 题目
+ * Created by zhangdongli on 16/11/28.
+ * 题型
  */
-
-import com.zdl.finalreview.dao.configs.QuestionEsConfig;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.*;
-
-@Document(indexName = QuestionEsConfig.INDEX_NAME, type = QuestionEsConfig.TYPE_NAME)
-public class Question {
-
+public class QuestionModel {
     /**
      * 序号
      */
-    @Id
-    private int order;
+    private String order;
 
     /**
      * 类型
      */
-    @Field(type = FieldType.Integer)
     private int type;
 
     /**
      * 标题
      */
-    @Field(type = FieldType.String, index = FieldIndex.analyzed, store = true, analyzer = "ik", searchAnalyzer = "ik")
     private String title;
 
     /**
@@ -52,7 +42,7 @@ public class Question {
      */
     private List<String> anwers;
 
-    public Question(int order, int type, String title, List<String> titleSpells, List<String> titleSimpSpells, List<String> options, List<String> anwers) {
+    public QuestionModel(String order, int type, String title, List<String> titleSpells, List<String> titleSimpSpells, List<String> options, List<String> anwers) {
         this.order = order;
         this.type = type;
         this.title = title;
@@ -62,14 +52,14 @@ public class Question {
         this.anwers = anwers;
     }
 
-    public Question() {
+    public QuestionModel() {
     }
 
-    public int getOrder() {
+    public String getOrder() {
         return order;
     }
 
-    public void setOrder(int order) {
+    public void setOrder(String order) {
         this.order = order;
     }
 
@@ -124,6 +114,6 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question:{order=" + this.order + ",type=" + this.type + ",title=" + this.title + "}";
+        return "QuestionModel:{order='" + this.order + "',type=" + this.type + ",title='" + this.title + "'}";
     }
 }
