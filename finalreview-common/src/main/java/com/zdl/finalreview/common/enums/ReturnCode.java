@@ -8,11 +8,12 @@ public enum ReturnCode {
 
     SUCCESS(200, "success"),
 
-    PARAM_ERROR(10000, "param.error"),
+    PARAM_ERROR(1000, "param.error"),
 
-    RUNTIME_ERROR(20000, "runtime.error");
+    RUNTIME_ERROR(500, "runtime.error");
 
     private int code;
+
     private String text;
 
     public String getText() {

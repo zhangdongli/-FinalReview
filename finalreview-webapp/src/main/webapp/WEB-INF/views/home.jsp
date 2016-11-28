@@ -29,7 +29,7 @@
                         var questionsUl = $("#questions");
                         questionsUl.empty();
 
-                        if (ret.code == 0 && ret.data != null && ret.data.length > 0) {
+                        if (ret.code == 200 && ret.data != null && ret.data.length > 0) {
                             var questionLi = null;
                             $.each(ret.data, function (i, data) {
                                 questionLi = $("<li><span></span><b></b></li>");

@@ -1,6 +1,7 @@
 package com.zdl.finalreview.webapp.controller;
 
 import com.google.common.collect.Lists;
+import com.zdl.finalreview.common.enums.ReturnCode;
 import com.zdl.finalreview.common.exception.FRException;
 import com.zdl.finalreview.service.biz.QuestionService;
 import com.zdl.finalreview.service.model.QuestionModel;
@@ -24,16 +25,15 @@ public class ActionController {
     @Autowired
     private QuestionService questionService;
 
-    @ResponseBody
     @RequestMapping(value = "question.html")
     public ResponseVo findQuestions(String keyword) {
         try {
             List<QuestionModel> questions = questionService.findQuestions(keyword);
-            return new ResponseVo(0, "ok", this.convert(questions));
+            return new ResponseVo(ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getText(), this.convert(questions));
         } catch (FRException e) {
             return new ResponseVo(e.getReturnCode().getCode(), e.getErrorMsg());
         } catch (Exception e) {
-            return new ResponseVo(500, e.getMessage());
+            return new ResponseVo(ReturnCode.RUNTIME_ERROR.getCode(), e.getMessage());
         }
     }
 
@@ -47,10 +47,10 @@ public class ActionController {
     }
 
     private List<QuestionVo> convert(List<QuestionModel> questions) {
-        List<QuestionVo> ret =null;
+        List<QuestionVo> ret = null;
         if (null != questions && questions.size() > 0) {
             ret = Lists.newArrayList();
-            QuestionVo questionVo = null;
+            QuestionVo questionVo;
             for (QuestionModel question : questions) {
                 questionVo = this.convert(question);
                 if (null != questionVo) {
