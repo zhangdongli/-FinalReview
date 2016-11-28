@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by zhangdongli on 16-11-28.
+ * 绘制页面
  */
 @Controller
 public class PageController {
