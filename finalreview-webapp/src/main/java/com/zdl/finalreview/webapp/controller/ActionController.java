@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -30,6 +31,19 @@ public class ActionController {
         try {
             List<QuestionModel> questions = questionService.findQuestions(keyword);
             return new ResponseVo(ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getText(), this.convert(questions));
+        } catch (FRException e) {
+            return new ResponseVo(e.getReturnCode().getCode(), e.getErrorMsg());
+        } catch (Exception e) {
+            return new ResponseVo(ReturnCode.RUNTIME_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "importData.html")
+    public ResponseVo importData() {
+        try {
+            File questionFile = new File("/tmp/数字图形设计复习题.xls");
+            questionService.importQuestions(questionFile);
+            return new ResponseVo(ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getText());
         } catch (FRException e) {
             return new ResponseVo(e.getReturnCode().getCode(), e.getErrorMsg());
         } catch (Exception e) {
