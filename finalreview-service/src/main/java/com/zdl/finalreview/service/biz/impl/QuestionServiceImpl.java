@@ -113,9 +113,13 @@ public class QuestionServiceImpl implements QuestionService {
         //导入到es
         if (null != questionModels && questionModels.size() > 0) {
             try {
+
                 List<Question> questions = this.reverseConvert(questionModels);
                 questionRepository.deleteAll();
-                questionRepository.save(questions);
+                List<Question> saveQuestions = (List<Question>) questionRepository.save(questions);
+                logBuilder.append("[成功：保存" + saveQuestions.size() + "道]");
+                logger.info(logBuilder.toString());
+
             } catch (Exception ex) {
                 logBuilder.append("[失败：导入到es报错-").append(ex.getMessage()).append("]");
                 logger.error(logBuilder.toString());
@@ -148,18 +152,22 @@ public class QuestionServiceImpl implements QuestionService {
             List<QuestionModel> multipleChoiceQuestons = this.getMultipleChoiceQuestons(sheet1);
             if (null != multipleChoiceQuestons && multipleChoiceQuestons.size() > 0) {
                 ret.addAll(multipleChoiceQuestons);
+                //System.out.println("解析选择题有"+multipleChoiceQuestons.size()+"道.");
             }
 
+
             //判断题
-            List<QuestionModel> trueOrFalseQuestons = this.getTrueorfalseOrFillintheblankQuestions(sheet2);
+            List<QuestionModel> trueOrFalseQuestons = this.getTrueorfalseOrFillintheblankQuestions(sheet2, QuestionType.TRUEORFALSE);
             if (null != trueOrFalseQuestons && trueOrFalseQuestons.size() > 0) {
                 ret.addAll(trueOrFalseQuestons);
+                //System.out.println("解析判断题有"+trueOrFalseQuestons.size()+"道.");
             }
 
             //填空题
-            List<QuestionModel> fillinTheblankQuestons = this.getTrueorfalseOrFillintheblankQuestions(sheet3);
+            List<QuestionModel> fillinTheblankQuestons = this.getTrueorfalseOrFillintheblankQuestions(sheet3, QuestionType.FILLINTHEBLANK);
             if (null != fillinTheblankQuestons && fillinTheblankQuestons.size() > 0) {
                 ret.addAll(fillinTheblankQuestons);
+                //System.out.println("解析填空题有"+fillinTheblankQuestons.size()+"道.");
             }
         } catch (FRException ex) {
             throw ex;
@@ -258,7 +266,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param questionSheet 判断题或填空题sheet
      * @return 判断题或填空题集合
      */
-    private List<QuestionModel> getTrueorfalseOrFillintheblankQuestions(Sheet questionSheet) throws FRException {
+    private List<QuestionModel> getTrueorfalseOrFillintheblankQuestions(Sheet questionSheet, QuestionType questionType) throws FRException {
         List<QuestionModel> questionModels = Lists.newArrayList();
         PinYin pinYin = new PinYin();
         String finalString = null;
@@ -302,8 +310,8 @@ public class QuestionServiceImpl implements QuestionService {
 
             //题型
             questionModel = new QuestionModel(
-                    QuestionType.TRUEORFALSE.getCode() + "_" + cell0.getContents(),
-                    QuestionType.TRUEORFALSE.getCode(),
+                    questionType.getCode() + "_" + cell0.getContents(),
+                    questionType.getCode(),
                     cell1.getContents(),
                     spells,
                     simpSpells,
