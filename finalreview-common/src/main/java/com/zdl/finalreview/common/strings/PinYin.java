@@ -62,7 +62,7 @@ public class PinYin {
             return new String[0];
         }
 
-        str = str.trim();
+        str = str.trim().toLowerCase();
 
         String lastTmpPinYin = null;
         List<String> pinyins = null;
