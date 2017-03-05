@@ -77,7 +77,7 @@
 <body>
 <div>
     <div align="center">
-        <input id="keyword" type="text" placeholder="汉字/拼音/拼音首字母" style="width: 100%;">
+        <input id="keyword" type="text" placeholder="汉字/拼音/拼音首字母/发布测试1" style="width: 100%;">
     </div>
     <hr>
     <div align="center">
