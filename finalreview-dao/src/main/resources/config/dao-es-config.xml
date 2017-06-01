@@ -11,7 +11,7 @@
     <es:repositories base-package="com.zdl.finalreview.dao.repository"/>
 
     <es:transport-client id="client"
-                         cluster-nodes="192.168.1.4:9300"
+                         cluster-nodes="127.0.0.1:9300"
                          cluster-name="zdl-es"/>
 
     <!--<es:transport-client id="client"-->

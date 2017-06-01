@@ -230,6 +230,10 @@ public class QuestionServiceImpl implements QuestionService {
 
             //拼音
             finalString = StringUtil.getNumberOrEnglishOrChinese(cell1.getContents());
+            if(finalString.length() > 20){
+                //只要前20个字符就够了
+                finalString = finalString.substring(0,19);
+            }
             spells = new ArrayList<>(Arrays.asList(pinYin.getStringPinYins(finalString)));
             simpSpells = new ArrayList<>(Arrays.asList(pinYin.getStringSimpPinYins(finalString)));
 

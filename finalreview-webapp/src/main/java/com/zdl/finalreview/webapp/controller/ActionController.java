@@ -42,7 +42,7 @@ public class ActionController {
     public ResponseVo importData() {
         try {
             File questionFile = new File("/tmp/数字图形设计复习题.xls");
-            //File questionFile = new File("/Users/zhangdongli/Desktop/数字图形设计复习题.xls");
+//            File questionFile = new File("/Users/zhangdongli/Desktop/数字图形设计复习资料.xls");
             questionService.importQuestions(questionFile);
             return new ResponseVo(ReturnCode.SUCCESS.getCode(), ReturnCode.SUCCESS.getText());
         } catch (FRException e) {
